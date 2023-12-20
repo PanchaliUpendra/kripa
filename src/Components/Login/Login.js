@@ -10,7 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import googleicon from '../../assests/googleicon.png';
-import {signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {signInWithPopup, GoogleAuthProvider ,sendEmailVerification} from "firebase/auth";
 
 
 function Login(){
@@ -35,6 +35,9 @@ function Login(){
     const loginsuccess = () =>toast.success('Successfully Logged In');
     const loginerror = () =>toast.error('please check your credientials');
     const loginformerror = () => toast.info('please fill the form correctly');
+
+    const useralreadyext = () => toast.warn('user email already registered');
+    const invalidmail = () => toast.warn('Invalid Mail')
 
     //sign with google
     async function signinwithgoogle(){
@@ -75,21 +78,30 @@ function Login(){
         setOpen(prev=>!prev);
         try{
 
-            if(userreg.email!=='' && userreg.password!=='' && userreg.cnfpassword!=='' && userreg.phone!=='' && userreg.name!==''){
+            if(userreg.email!=='' && userreg.password!=='' && userreg.cnfpassword!=='' && userreg.password===userreg.cnfpassword && userreg.phone!=='' && userreg.name!==''){
             await createUserWithEmailAndPassword(auth, userreg.email, userreg.password)
             .then((userCredential) => {
                 // Signed up 
                 console.log(userCredential);
-                loginsuccess();
-                 navigate('/');
+                sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    // Email verification sent!
+                    navigate('/verification')
+                    // ...
+                });
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
+                if(errorCode==='auth/invalid-email'){
+                     invalidmail();
+                }else if(errorCode==='auth/email-already-in-use'){
+                    useralreadyext();
+                }else{
                 const errorMessage = error.message;
                 console.log('error code: ',errorCode ,"error message",errorMessage);
                 loginerror();
-                // ..
+                }
             });
             }else{
                await loginformerror();

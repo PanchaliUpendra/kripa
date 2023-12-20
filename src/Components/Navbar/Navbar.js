@@ -78,7 +78,7 @@ function Navbar(){
             <NavLink to='/collection/t-shirts'><li>t-Shirts</li></NavLink>
             <NavLink to='/collection/leggins'><li>leggins</li></NavLink>
             <NavLink to='/collection/ladies-inners'><li>ladies inners</li></NavLink>
-            <li>about us</li>
+            <NavLink to='/about'><li>about us</li></NavLink>
             <li>store locator</li>
             <NavLink to='/contact'><li>contact</li></NavLink>
 

@@ -7,25 +7,29 @@ function MyProvider({children}){
 
     const [user,setuser] = useState({
         isauthed:false,
-        uid:null
+        uid:null,
+        emailverified:false
     })
 
     const sharedvalue={
         isauthed :user.isauthed,
-        uid:user.uid
+        uid:user.uid,
+        emailverified:user.emailverified
     }
 
     useEffect(()=>{
-        onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
               // User is signed in, see docs for a list of available properties
               // https://firebase.google.com/docs/reference/js/auth.user
+              console.log(user.emailVerified);
               const tuid = user.uid;
               setuser(prev=>(
                 {
                     ...prev,
                     uid:tuid,
-                    isauthed:true
+                    isauthed:true,
+                    emailverified:user.emailVerified
                 }
               ))
               // ...
@@ -35,11 +39,16 @@ function MyProvider({children}){
                     {
                         ...prev,
                         uid:null,
-                        isauthed:false
+                        isauthed:false,
+                        emailVerified:false
                     }
                 ))
             }
           });
+          return () => {
+            // Unsubscribe when the component unmounts
+            unsubscribe();
+          };
     },[]);
     return(
         <MyContext.Provider value={sharedvalue}>

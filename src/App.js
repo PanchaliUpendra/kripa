@@ -9,6 +9,9 @@ import Eachcate from './Features/Eachcate/Eachcate';
 import Eachitem from './Features/Eachitem/Eachitem';
 import Contact from './Features/Contact/Contact';
 import MyContext from './MyContext';
+import Emailverification from './Others/Emailverification/Emailverification';
+import Pagenotfound from './Others/Pagenotfound/Pagenotfound';
+import About from './Components/About/About';
 
 
 
@@ -29,6 +32,9 @@ function App() {
         <Route path='/collection/:cate' element={<Eachcate/>}/>
         <Route path='/shop/:id' element={<Eachitem/>}/>
         <Route path='/contact' element={<Contact/>}/>
+        {sharedvalue.emailverified===false && sharedvalue.isauthed===true && <Route path='/verification' element={<Emailverification/>}/>}
+        <Route path='/*' element={<Pagenotfound/>}/>
+        <Route path='/about' element={<About/>}/>
       </Routes>
       </div>
     </BrowserRouter>
