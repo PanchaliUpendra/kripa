@@ -1,0 +1,246 @@
+.eachitem-con{
+    padding-bottom: 5%;
+    border-bottom: 1px solid black;
+}
+.eachitem-product-con{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    width: 70%;
+    margin: auto;
+}
+
+.eachitem-product-con>div{
+    width: 100%;
+    height: 100%;
+}
+
+.eachitem-product-con div:nth-child(1){
+    background-color: aquamarine;
+}
+
+.eachitem-product-con div:nth-child(2){
+    background-color:red;
+}
+
+
+
+.eachitem-product-con>div img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.eachitem-footer{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.eachitem-eachview{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    max-width:800px;
+    background-color: white;
+    margin: auto;
+    height: 100%;
+    gap: 20px;
+}
+
+.eachitem-eachview>div{
+    width: 100%;
+    height: 100%;
+}
+
+.eachitem-eachview>div img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.eachitem-detail-header{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+.eachitem-detail-header>h1{
+    font-size: 2.5rem;
+    font-weight: 400;
+    font-family: 'quicksand';
+}
+
+.eachitem-detail-header>p{
+    font-family: 'quicksand';
+    letter-spacing: 1px;
+}
+
+.eachitem-size{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.eachitem-size>p{
+    font-size: 0.9rem;
+    font-family: 'quicksand';
+    font-weight: 400;
+    color: black;
+    text-transform: capitalize;
+}
+
+.eachitem-size>ul{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.eachitem-size>ul li{
+    padding: 8px 15px;
+    min-width: 60px;
+    border: 1.5px solid gray;
+    border-radius: 30px;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-family: 'quicksand';
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+
+.eachitem-size-active{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.eachitem-size-disable{
+    color: gray;
+    text-decoration: line-through;
+}
+.eachitem-sixe-inactive:hover{
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.eachitem-quantity{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.eachitem-quantity>p{
+    font-size: 0.9rem;
+    font-family: 'quicksand';
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.eachitem-quantity>div{
+    display: flex;
+    flex-direction: row;
+    max-width: 150px;
+    border: 1px solid gray;
+}
+.eachitem-quantity>div p{
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.eachitem-quantity>div p:nth-child(2){
+    border: 1px solid gray;
+    border-top: none;
+    border-bottom: none;
+}
+.eachitem-quantity>div p:nth-child(1){
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.eachitem-quantity>div p:nth-child(1){
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.eachitem-quantity>div p:nth-child(1):hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+.eachitem-quantity>div p:nth-child(3):hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.eachitem-buy-now{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+
+.eachitem-buy-now>button{
+    min-height: 40px;
+}
+
+.eachitem-buy-now>button:nth-child(1){
+    border: 1px solid black;
+    color: black;
+    font-size: 1rem;
+    font-family: 'quicksand';
+    text-transform: capitalize;
+    background-color: white;
+}
+.eachitem-buy-now button:nth-child(1):hover{
+    background-color: rgba(215, 215, 215,0.3);
+    border: 1.5px solid black;
+    cursor: pointer;
+}
+.eachitem-buy-now>button:nth-child(2){
+    border: 1px solid black;
+    color: white;
+    font-size: 1rem;
+    font-family: 'quicksand';
+    text-transform: capitalize;
+    background-color: black;
+    cursor: pointer;
+}
+
+/* eachitemview-one */
+
+.eachitemview-one{
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+/* eachitem-related-items */
+.eachitem-related-items{
+    margin-left: 6%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.eachitem-related-items>h1{
+    font-family: 'quicksand';
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+
+@media screen and (max-width:677.213px){
+    .eachitem-eachview{
+        display: flex;
+        flex-direction: column;
+        width: 88%;
+    }
+    .eachitem-detail-header>h1{
+        font-size: 1.6rem;
+    }
+    .eachitem-size>ul li{
+        width: fit-content;
+    }
+}

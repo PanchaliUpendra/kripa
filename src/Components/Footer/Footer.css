@@ -1,0 +1,117 @@
+.footer-inner{
+    max-width: 2000.123456px;
+    display: grid;
+    grid-template-columns: 2fr repeat(2,1fr) auto;
+    /* grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); */
+    grid-template-rows: auto;
+    justify-content: center;
+    margin-left: 6%;
+    margin-right: 6%;
+    gap: 10px;
+    margin-bottom: 2%;
+    
+}
+/* footer main */
+.footer-imp{
+    display: flex;
+    flex-direction: column;
+}
+.footer-imp>h1{
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    font-family: 'quicksand';
+    font-weight: 800;
+}
+.footer-imp>p{
+    text-align: justify;
+    max-width: 400px;
+    font-family: 'quicksand';
+    font-size: 1rem;
+    font-weight:500;
+}
+/* footer other */
+.footer-other{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.footer-other>h1{
+    font-family: 'quicksand';
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 100%;
+}
+.footer-other>p{
+    font-family: 'quicksand';
+    font-size: 1rem;
+    font-weight:500;
+}
+.home-copy-right{
+    min-height: 50px;
+    background-color: #1E2832;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 6%;
+}
+.footer-imp-icon{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.footer-imp-icon>a{
+    color: black;
+}
+
+@media screen and (min-width:1999.12345px){
+    .footer-inner{
+        max-width:1900px;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width:940.12345px){
+    .footer-inner{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .footer-other{
+        align-items: center;
+    }
+    .footer-other>h1{
+        text-align: center;
+    }
+}
+
+@media screen and (max-width:507.12345px){
+    .footer-inner{
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .footer-other{
+        align-items: center;
+        text-align: center;
+    }
+    .footer-other>h1{
+        text-align:center;
+    }
+    .footer-imp>p{
+        text-align: center;
+    }
+    .footer-imp>h1{
+        text-align: center;
+    }
+    .footer-imp-icon{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+}
+

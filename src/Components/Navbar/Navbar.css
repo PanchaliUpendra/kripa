@@ -1,0 +1,140 @@
+.nav-con{
+    position: sticky;
+    top: -1px;
+    z-index: 9999;
+    background-color: #ffffff;
+}
+.navbar-menu-icons{
+    cursor: pointer;
+}
+.navbar-menu-icons:hover{
+    transform: scaleZ(1.1);
+}
+.nav-in-con{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid #d2d2d2;
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgba(30, 40, 50, 0.12);
+    min-height: 87px;
+}
+.nav-in-div1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+   
+}
+.nav-in-div1>img{
+    width: auto;
+    height: 24px;
+}
+.nav-in-div1>h1{
+    text-align: center;
+    font-family: 'quicksand';
+    text-transform: uppercase;
+    font-size: 2.1rem;
+}
+.nav-login>h1{
+    font-size: 1.2rem;
+    font-family: 'quicksand';
+    font-weight: 600;
+}
+.list-box{
+    width: 399px;
+    padding-top:90px ;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 60px;
+}
+.list-box li{
+    width: 100%;
+    padding: 11px 30px;
+    font: 1.3rem;
+    font-family: 'quicksand';
+    font-weight: 500;
+    text-transform: capitalize;
+    cursor: pointer;
+    color: black;
+}
+.nav-discount-div{
+    background-color: #1E2832;
+    z-index: 9998;
+    position: relative;
+    top: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.nav-discount-div>p{
+    text-align: center;
+    color: white;
+    font-size: 0.8rem;
+    font-family: 'quicksand';
+    font-weight: 400;
+}
+
+.active{
+    background-color: rgba(30, 40, 50, 0.12);
+}
+
+.list-box li:hover{
+    background-color: rgba(30, 40, 50, 0.12);
+}
+
+.wishlist-icons{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.ul-li-icons-navbar{
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    gap: 10px;
+    bottom: 0;
+    background-color: white;
+    width: 390px;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+.ul-li-icons-navbar>a{
+    color: black;
+}
+.empowered-name{
+    font-size: 0.7rem;
+    font-family: 'quicksand';
+    text-align: center;
+}
+
+@media screen and (max-width:410.123456px){
+    .list-box{
+        width: 300px;
+    }
+    .ul-li-icons-navbar{
+        width: 290px;
+    }
+    .nav-in-con{
+        padding-left: 10px;
+    }
+}
+@media screen and (max-width:310.123456px){
+    .list-box{
+        width: 250px;
+    }
+    .ul-li-icons-navbar{
+        width: 245px;
+    }
+}

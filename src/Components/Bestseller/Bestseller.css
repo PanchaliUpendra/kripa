@@ -1,0 +1,84 @@
+.bestsell-con{
+    margin: auto;
+    padding-left: 6%;
+    padding-right: 6%;
+    max-width: 2000px;
+    margin-bottom: 5%;
+}
+
+.bestsell-head>h1{
+    text-align: center;
+    font-size: 2.1rem;
+    font-weight: 700;
+    font-family: 'quicksand';
+    text-transform: capitalize;
+}
+.bestsell-head>p{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color:grey;
+    font-size: 1.1rem;
+    font-family: 'quicksand';
+    padding: 10px;
+}
+
+.bestsell-all-pro{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-top: 35px;
+    gap: 20px;
+}
+.bestseller-each-div{
+    display: flex;
+    flex-direction: column;
+}
+
+.bestseller-each-div .best-images{
+    width: 300px;
+    height: 300px;
+}
+
+.bestseller-each-div>div img{
+    width: 300px;
+    height: 300px;
+    object-fit: fill;
+}
+
+.bestseller-each-div>h1{
+    font-size: 1.1rem;
+    font-weight:600;
+    font-family: 'quicksand';
+    text-transform: capitalize;
+}
+.bestseller-dress-price{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bestseller-dress-price p:nth-child(1){
+    color: gray;
+}
+.bestseller-dress-price p:nth-child(2){
+    font-family: 'quicksand';
+    font-weight: 600;
+}
+.bestsell-view-all{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+.bestsell-view-all>button{
+    padding: 10px 20px;
+    min-width: 110px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-family: 'quicksand';
+    font-size: 1.1rem;
+    cursor: pointer;
+}
