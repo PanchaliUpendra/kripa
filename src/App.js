@@ -12,7 +12,8 @@ import MyContext from './MyContext';
 import Emailverification from './Others/Emailverification/Emailverification';
 import Pagenotfound from './Others/Pagenotfound/Pagenotfound';
 import About from './Components/About/About';
-
+import Addtocart from './Features/Addtocart/Addtocart';
+import Wishlist from './Features/Wishlist/Wishlist';
 
 
 
@@ -35,6 +36,8 @@ function App() {
         {sharedvalue.emailverified===false && sharedvalue.isauthed===true && <Route path='/verification' element={<Emailverification/>}/>}
         <Route path='/*' element={<Pagenotfound/>}/>
         <Route path='/about' element={<About/>}/>
+        {sharedvalue.isauthed===true && sharedvalue.emailverified && <Route path='/cart' element={<Addtocart/>}/>}
+        {sharedvalue.isauthed===true && sharedvalue.emailverified && <Route path='/wishlist' element={<Wishlist/>}/>}   
       </Routes>
       </div>
     </BrowserRouter>

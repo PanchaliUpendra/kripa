@@ -125,8 +125,8 @@ function Navbar(){
                     </div> */}
 
                     {sharedvalue.isauthed ?<div className="wishlist-icons">
-                        <FavoriteBorderIcon/>
-                        <LocalMallIcon/>
+                        <FavoriteBorderIcon onClick={()=>navigate('/wishlist')}/>
+                        <LocalMallIcon onClick={()=>navigate('/cart')}/>
                     </div>: <div>
                         <div className="nav-login">
                             <h1 onClick={()=>navigate('/login')} style={{cursor:'pointer'}}>Login</h1>
