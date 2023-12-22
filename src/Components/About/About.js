@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './About.css';
 import Footer from '../Footer/Footer';
 
 function About(){
+    useEffect(()=>{
+        window.scrollTo({top:0,behavior:'smooth'});
+    },[]);
     return(
         <>
             <div className='about-con'>
