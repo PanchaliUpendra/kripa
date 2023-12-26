@@ -40,7 +40,7 @@ function Eachcate(){
 
     useEffect(()=>{
         window.scrollTo({top:0,behavior:'smooth'})
-    },[]);
+    },[cate]);
     return(
         <>
         <div className='eachcate-con'>

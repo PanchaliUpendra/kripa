@@ -137,6 +137,15 @@ function Homepage(){
                     <div className="home-con-third1" onClick={()=>navigate('/shop')}>
                         <div>
                             <img src={pro9} alt="female1-fea"/>
+                            <div className="homepage-first-div-category">
+                                <ul>
+                                    <li>Comfy everyday styles</li>
+                                    <li>Comfortable and stylish</li>
+                                    <li>Pretty and graceful designs</li>
+                                    <li>Great for casual or active wear</li>
+                                    <li>From casual to standout pieces</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div className="home-con-third2">
