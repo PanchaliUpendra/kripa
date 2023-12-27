@@ -46,12 +46,11 @@ function Login(){
             signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result);
+
                 navigate('/');
                 loginsuccess();
                
-                // const credential = GoogleAuthProvider.credentialFromResult(result);
-                // const token = credential.accessToken;
-                // const user = result.user;
+               
             }).catch((error) => {
                 // // Handle Errors here.
                 // const errorCode = error.code;
@@ -79,29 +78,50 @@ function Login(){
         try{
 
             if(userreg.email!=='' && userreg.password!=='' && userreg.cnfpassword!=='' && userreg.password===userreg.cnfpassword && userreg.phone!=='' && userreg.name!==''){
-            await createUserWithEmailAndPassword(auth, userreg.email, userreg.password)
-            .then((userCredential) => {
-                // Signed up 
+            
+            // here is process of registration 
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, userreg.email, userreg.password);
                 console.log(userCredential);
-                sendEmailVerification(auth.currentUser)
-                .then(() => {
-                    // Email verification sent!
-                    navigate('/verification')
-                    // ...
-                });
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                if(errorCode==='auth/invalid-email'){
-                     invalidmail();
-                }else if(errorCode==='auth/email-already-in-use'){
-                    useralreadyext();
-                }else{
-                const errorMessage = error.message;
-                console.log('error code: ',errorCode ,"error message",errorMessage);
-                loginerror();
+                if(userCredential){
+                     //adding the users data to the backend
+                    const response = await fetch('http://localhost:8081/userdata.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        email: userreg.email,
+                                        phone: userreg.phone,
+                                        name: userreg.name,
+                                        uid:userCredential.user.uid
+                                    })
+                                });
+
+                const data = await response.json();
+                console.log(data);
                 }
+            } catch (error) {
+                const errorCode = error.code;
+                if (errorCode === 'auth/invalid-email') {
+                    invalidmail();
+                } else if (errorCode === 'auth/email-already-in-use') {
+                    useralreadyext();
+                } else {
+                    const errorMessage = error.message;
+                    console.error('error code:', errorCode, 'error message', errorMessage);
+                    loginerror();
+                }
+            }
+            
+            //email verification process
+            await sendEmailVerification(auth.currentUser)
+            .then(() => {
+                // Email verification sent!
+                navigate('/verification')
+                // ...
+            }).catch((error)=>{
+                console.log('you will get error when sending the verification',error);
             });
             }else{
                await loginformerror();

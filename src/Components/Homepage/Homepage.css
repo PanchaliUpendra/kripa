@@ -193,6 +193,7 @@
     font-family: 'quicksand';
     font-weight: 600;
     text-transform: capitalize;
+    width: 70%;
 }
 
 .homepage-first-div-category>ul li{
@@ -423,6 +424,10 @@
         color: rgba(233, 233, 233,0.15);
         width: 100%;
     }
+
+    .homepage-first-div-category{
+        width: 100%;
+    }
 }
 
 @media screen and (max-width:520.12345px){
@@ -447,6 +452,9 @@
     }
     .homepage-first-div-category{
         font-size: 0.8rem;
+    }
+    .homepage-first-div-category{
+        width: 90%;
     }
 }
 

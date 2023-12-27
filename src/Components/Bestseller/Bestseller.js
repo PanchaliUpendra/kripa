@@ -2,10 +2,14 @@ import React from "react";
 import './Bestseller.css';
 import { Data } from "./Data";
 import { useNavigate } from "react-router-dom";
+// import { useRef } from "react";
+// import { motion, useScroll } from "framer-motion";
 
 
 function Bestseller(){
     const navigate = useNavigate();
+    // const ref = useRef(null);
+    // const { scrollXProgress } = useScroll({ container: ref });
     return(
         <>
         <div className="bestsell-con">
@@ -17,7 +21,7 @@ function Bestseller(){
                 <button onClick={()=>navigate('/shop')}>View All</button>
             </div>
             
-            <div className="bestsell-all-pro">
+            <div className="bestsell-all-pro" >
                 {Data.map((item,idx)=>(
                     <div className="bestseller-each-div" key={idx}>
                         <div className="best-images">
@@ -30,6 +34,7 @@ function Bestseller(){
                         </div>
                     </div>
                 ))}
+                
             </div>
         </div>
         </>

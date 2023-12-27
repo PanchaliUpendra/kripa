@@ -79,9 +79,8 @@ function Navbar(){
             <NavLink to='/collection/leggins'><li>leggins</li></NavLink>
             <NavLink to='/collection/ladies-inners'><li>ladies inners</li></NavLink>
             <NavLink to='/about'><li>about us</li></NavLink>
-            <li>store locator</li>
+            <NavLink to='/storelocator'><li>store locator</li></NavLink>
             <NavLink to='/contact'><li>contact</li></NavLink>
-
             {sharedvalue.isauthed?<li onClick={()=>funsignout()}>Sign Out</li>:<NavLink to='/login'><li>login</li></NavLink>}
             <div className="ul-li-icons-navbar">
             <a href="https://www.facebook.com/profile.php?id=61553982164535" target="_blank" rel="noopener noreferrer">
