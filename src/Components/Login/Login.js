@@ -39,30 +39,82 @@ function Login(){
     const useralreadyext = () => toast.warn('user email already registered');
     const invalidmail = () => toast.warn('Invalid Mail')
 
+    //adding the user tto sql using the fecth
+    async function createNewUserInMySQL(gemail, gphone, gname , guid){
+        try{
+            const response = await fetch('http://localhost:8081/userdata.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        email:gemail,
+                                        phone:gphone,
+                                        name:gname,
+                                        uid:guid
+                                    })
+                                });
+
+                const data = await response.json();
+                console.log(data);
+        }catch(e){
+            console.log('getting error while login with google in create new user in sql',e);
+        }
+    }
+
+    //fetch the uid is present or not
+    async function checkUserExistsInMySQL(cuid){
+        try{
+            const response = await fetch('http://localhost:8081/checkuid.php',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({
+                    uid:cuid,
+                })
+            });
+            const res = await response.json();
+            console.log("here is your check uid responsed ",res);
+            return (res.message ==="false" || res.message===false)?false:true;
+        }catch(e){
+            console.log("you got an error while checking  user exists in mysql",e);
+            return true; //while we got error, then we have to send true because , it won't add data to sql database
+        }
+
+    }
+
     //sign with google
     async function signinwithgoogle(){
         try{
            
-            signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log(result);
+            // signInWithPopup(auth, provider)
+            // .then((result) => {
+            //     console.log(result);
 
+            //     navigate('/');
+            //     loginsuccess();
+               
+               
+            // }).catch((error) => {
+               
+            //     console.error(error);
+            //     loginerror()
+            // });
+            try{
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                const userExistsInMySQL = await checkUserExistsInMySQL(user.uid);
+                if(!userExistsInMySQL){
+                    await createNewUserInMySQL(user.email,user.phoneNumber,user.displayName,user.uid);
+                }
+                console.log(result);
                 navigate('/');
                 loginsuccess();
-               
-               
-            }).catch((error) => {
-                // // Handle Errors here.
-                // const errorCode = error.code;
-                // const errorMessage = error.message;
-                // // The email of the user's account used.
-                // const email = error.customData.email;
-                // // The AuthCredential type that was used.
-                // const credential = GoogleAuthProvider.credentialFromError(error);
-                // // ...
-                console.error(error);
+            }catch(e){
+                console.error(e);
                 loginerror()
-            });
+            }
         }catch(e){
             console.log('error while sign in with google');
         }finally{
@@ -81,26 +133,37 @@ function Login(){
             
             // here is process of registration 
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, userreg.email, userreg.password);
-                console.log(userCredential);
-                if(userCredential){
-                     //adding the users data to the backend
-                    const response = await fetch('http://localhost:8081/userdata.php', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        email: userreg.email,
-                                        phone: userreg.phone,
-                                        name: userreg.name,
-                                        uid:userCredential.user.uid
-                                    })
-                                });
+                    const userCredential = await createUserWithEmailAndPassword(auth, userreg.email, userreg.password);
+                    console.log(userCredential);
+                    if(userCredential){
+                        //adding the users data to the backend
+                        const response = await fetch('http://localhost:8081/userdata.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            email: userreg.email,
+                                            phone: userreg.phone,
+                                            name: userreg.name,
+                                            uid:userCredential.user.uid
+                                        })
+                                    });
 
-                const data = await response.json();
-                console.log(data);
+                    const data = await response.json();
+                    console.log(data);
                 }
+
+                //email verification process
+                await sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    // Email verification sent!
+                    navigate('/verification')
+                    // ...
+                }).catch((error)=>{
+                    console.log('you will get error when sending the verification',error);
+                });
+                
             } catch (error) {
                 const errorCode = error.code;
                 if (errorCode === 'auth/invalid-email') {
@@ -113,16 +176,6 @@ function Login(){
                     loginerror();
                 }
             }
-            
-            //email verification process
-            await sendEmailVerification(auth.currentUser)
-            .then(() => {
-                // Email verification sent!
-                navigate('/verification')
-                // ...
-            }).catch((error)=>{
-                console.log('you will get error when sending the verification',error);
-            });
             }else{
                await loginformerror();
             }
