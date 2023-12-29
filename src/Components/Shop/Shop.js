@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Shop.css';
+//material ui icons
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 //importing the framer motion
 import { motion, useScroll, useSpring } from "framer-motion";
 //import tilt js
@@ -22,6 +26,9 @@ import { useNavigate } from 'react-router-dom';
 
 function Shop(){
     const navigate = useNavigate();
+
+    //wishlist icons handle 
+    const [addwishlist,setaddwishlist] = useState(false);
 
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -105,11 +112,34 @@ function Shop(){
             <div className='path'>
                 <p>Home / <span>Productcs</span></p>
             </div>
+            {/* shop filter and sort */}
+            <div className='shop-filter-sort'>
+                <div className='shop-filter-price'>
+                    <div className='shop-filter'>
+                        <p>filter :</p>
+                        <div className='shop-filter-avail'>
+                            <p>availability</p>
+                            <KeyboardArrowDownIcon fontSize="small"/>
+                        </div>
+                    </div>
+                    <div className='shop-price'>
+                        <p>price</p>
+                        <KeyboardArrowDownIcon fontSize="small"/>
+                    </div>
+                </div>
+                <div className='shop-sort-products'>
+                    <div className='shop-sort'>
+                        <p>sort</p>
+                        <KeyboardArrowDownIcon fontSize="small"/>
+                    </div>
+                    <div>239 products</div>
+                </div>
+            </div>
             <div className='shop-all-products'>
                 {
                     ProductsData.map((item,idx)=>(
-                        
-                        <div key={idx} className='shop-all-products-each-increase' onClick={()=>navigate(`/shop/${item.id}`)}>
+                        <div key={idx} className='realative-div-in-shop-all-products'>
+                        <div  className='shop-all-products-each-increase' onClick={()=>navigate(`/shop/${item.id}`)}>
                             <Tilt options={defaultOptions}>
                             <div>
                             <img src={item.imgurl} alt="all-products"/>
@@ -119,7 +149,11 @@ function Shop(){
                                 <p>{item.name}</p>
                                 <p>Rs.{Number(item.dis)>0 && Number(item.dis)<=99?<span className='with-dis'>{numberwithcommas(funcaldis(item.dis,item.price))}<span className='dismiss-price'>{item.price}</span> <span className='percent-off-red'>({item.dis}% OFF)</span></span>:<span className='not-dis'>{numberwithcommas(item.price)}/-</span>}</p>
                             </div>
-                            
+                           
+                        </div>
+                        <div className='shop-all-products-wishlist'>
+                                {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                        </div>
                         </div>
                         
                         

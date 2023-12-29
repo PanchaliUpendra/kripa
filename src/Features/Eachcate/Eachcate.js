@@ -1,14 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Eachcate.css';
 import { ProductsData } from '../../ProductsData/ProductsData';
 import { Tilt } from 'react-tilt'
 import { useNavigate, useParams} from 'react-router-dom';
 import Footer from '../../Components/Footer/Footer';
 import Eachcategory from '../../assests/eachcategory.png';
+//material ui icons
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function Eachcate(){
     const navigate = useNavigate();
     const { cate } = useParams();
+    //wishlist icons handle 
+    const [addwishlist,setaddwishlist] = useState(false);
+
 
     function numberwithcommas(x){
         let z=x;
@@ -51,23 +58,49 @@ function Eachcate(){
                 <h1>{`${cate}`}</h1>
                 <p><span onClick={()=>navigate('/')}>Home / Collection /</span> {`${cate}`}</p>
             </div>
+            {/* shop filter and sort */}
+            <div className='shop-filter-sort'>
+                <div className='shop-filter-price'>
+                    <div className='shop-filter'>
+                        <p>filter :</p>
+                        <div className='shop-filter-avail'>
+                            <p>availability</p>
+                            <KeyboardArrowDownIcon fontSize="small"/>
+                        </div>
+                    </div>
+                    <div className='shop-price'>
+                        <p>price</p>
+                        <KeyboardArrowDownIcon fontSize="small"/>
+                    </div>
+                </div>
+                <div className='shop-sort-products'>
+                    <div className='shop-sort'>
+                        <p>sort</p>
+                        <KeyboardArrowDownIcon fontSize="small"/>
+                    </div>
+                    <div>147 products</div>
+                </div>
+            </div>
             <div className='shop-all-products'>
                 {
                     ProductsData.filter((item)=>item.cate===`${cate}`).map((item,idx)=>(
-                        
-                        <div key={idx} className='shop-all-products-each-increase' onClick={()=>navigate(`/shop/${item.id}`)}>
-                            <Tilt options={defaultOptions}>
-                            <div>
-                            <img src={item.imgurl} alt="all-products"/>
+                        <div className='realative-div-in-shop-all-products' key={idx}>
+                            <div  className='shop-all-products-each-increase' onClick={()=>navigate(`/shop/${item.id}`)}>
+                                <Tilt options={defaultOptions}>
+                                <div>
+                                <img src={item.imgurl} alt="all-products"/>
+                                </div>
+                                </Tilt>
+                                <div className='shop-each-product-header'>
+                                    <p>{item.name}</p>
+                                    <p>Rs.{Number(item.dis)>0 && Number(item.dis)<=99?<span className='with-dis'>{numberwithcommas(funcaldis(item.dis,item.price))}<span className='dismiss-price'>{item.price}</span> <span className='percent-off-red'>({item.dis}% OFF)</span></span>:<span className='not-dis'>{numberwithcommas(item.price)}/-</span>}</p>
+                                </div>
+                                
                             </div>
-                            </Tilt>
-                            <div className='shop-each-product-header'>
-                                <p>{item.name}</p>
-                                <p>Rs.{Number(item.dis)>0 && Number(item.dis)<=99?<span className='with-dis'>{numberwithcommas(funcaldis(item.dis,item.price))}<span className='dismiss-price'>{item.price}</span> <span className='percent-off-red'>({item.dis}% OFF)</span></span>:<span className='not-dis'>{numberwithcommas(item.price)}/-</span>}</p>
+                            <div className='shop-all-products-wishlist'>
+                                {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
                             </div>
-                            
                         </div>
-                        
                         
                     ))
                 }

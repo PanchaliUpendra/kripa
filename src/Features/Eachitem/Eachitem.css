@@ -49,6 +49,7 @@
 .eachitem-eachview>div{
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 .eachitem-eachview>div img{

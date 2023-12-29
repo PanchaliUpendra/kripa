@@ -42,6 +42,64 @@
     display: none;
     padding: 0;
 }
+/* filter and sort css code will write here */
+.shop-filter-sort{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 6%;
+    margin-right: 6%;
+    align-items: center;
+    text-transform: capitalize;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'quicksand';
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.shop-filter-price{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.shop-filter{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+.shop-filter-avail{
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    align-items: center;
+}
+.shop-filter-avail:hover p{
+    text-decoration: underline;
+}
+.shop-price{
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+    gap: 3px;
+}
+.shop-price:hover p{
+    text-decoration: underline;
+}
+
+.shop-sort-products{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+}
+
+.shop-sort{
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    align-items: center;
+}
 
 /* shop products starts here */
 .path{
@@ -77,6 +135,17 @@
     overflow: hidden;
     border-radius: 10px;
     transition: all 1s ease;
+    cursor: pointer;
+}
+
+.realative-div-in-shop-all-products{
+    position: relative;
+}
+.shop-all-products-wishlist{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index:0;
     cursor: pointer;
 }
 /* .shop-all-products>div:hover{

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Products.css';
 import { products as Data } from '../Bestseller/Data';
 import { useNavigate } from 'react-router-dom';
+//material ui icons
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 function Products(){
     const navigate = useNavigate();
+    //wishlist icons handle 
+    const [addwishlist,setaddwishlist] = useState(false);
     function numberwithcommas(x){
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
     }
@@ -29,19 +34,28 @@ function Products(){
                 </div>
                 <div className='products-all-images'>
                     {Data.map((item,idx)=>(
-                        <div key={idx} className='grid-pro-columns' onClick={()=>navigate(`/shop/${item.id}`)}>
-                            <section>
+                        
+                            <div key={idx} className='grid-pro-columns' >
+                                <div onClick={()=>navigate(`/shop/${item.id}`)}>
+                                <section>
 
-                            <img src={item.imgurl} alt="products"/>
-                            </section>
-                            <div className='grid-img-sale-div'>
-                                <p>sale</p>
+                                <img src={item.imgurl} alt="products"/>
+                                
+                                </section>
+                                <div className='grid-img-sale-div'>
+                                    <p>sale</p>
+                                </div>
+                                <div className='grid-products-name'>
+                                    <h1>{item.name}</h1>
+                                    <p>Rs. <span>{numberwithcommas(item.price)}/-</span></p>
+                                </div>
+                                </div>
+                                <div className='shop-all-products-wishlist'>
+                                    {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                                </div>
                             </div>
-                            <div className='grid-products-name'>
-                                <h1>{item.name}</h1>
-                                <p>Rs. <span>{numberwithcommas(item.price)}/-</span></p>
-                            </div>
-                        </div>
+                            
+                        
                     ))}
                 </div>
 

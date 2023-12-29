@@ -6,6 +6,10 @@ import { Tilt } from 'react-tilt'
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../Components/Footer/Footer';
 
+//import material ui icons
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 
 function Eachitem(){
     const navigate = useNavigate();
@@ -13,6 +17,9 @@ function Eachitem(){
     const [quantity,setquantity] = useState(1);
     const {id} = useParams();
     const [cate,setcate]=useState([]);
+
+    //wishlist handling
+    const [addwishlist,setaddwishlist] = useState(false);
 
 
     function numberwithcommas(x){
@@ -66,6 +73,9 @@ function Eachitem(){
                         <div className='eachitem-eachview'>
                             <div>
                                 <img src={product.imgurl} alt="pic-loading"/>
+                                <div className='shop-all-products-wishlist'>
+                                    {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                                </div>
                             </div>
                             <div className='eachitem-detail'>
                                 <div className='eachitem-detail-header'>
@@ -110,7 +120,8 @@ function Eachitem(){
         <div className='shop-all-products'>
             {
                 ProductsData.filter((item1)=>item1.cate===cate && Number(item1.id)!==Number(id)).map((item,idx)=>(
-                    <div key={idx} className='shop-all-products-each-increase' onClick={()=>navigate(`/shop/${item.id}`)}>
+                    <div className='realative-div-in-shop-all-products' key={idx}>
+                        <div  className='shop-all-products-each-increase' onClick={()=>navigate(`/shop/${item.id}`)}>
                             <Tilt options={defaultOptions}>
                             <div>
                             <img src={item.imgurl} alt="all-products"/>
@@ -120,8 +131,11 @@ function Eachitem(){
                                 <p>{item.name}</p>
                                 <p>Rs.{Number(item.dis)>0 && Number(item.dis)<=99?<span className='with-dis'>{numberwithcommas(funcaldis(item.dis,item.price))}<span className='dismiss-price'>{item.price}</span> <span className='percent-off-red'>({item.dis}% OFF)</span></span>:<span className='not-dis'>{numberwithcommas(item.price)}/-</span>}</p>
                             </div>
-                            
                         </div>
+                        <div className='shop-all-products-wishlist'>
+                                {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                        </div>
+                    </div>
                 ))
             }
         </div>
