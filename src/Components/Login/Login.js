@@ -40,50 +40,50 @@ function Login(){
     const useralreadyext = () => toast.warn('user email already registered');
     const invalidmail = () => toast.warn('Invalid Mail')
 
-    //adding the user tto sql using the fecth
-    async function createNewUserInMySQL(gemail, gphone, gname , guid){
-        try{
-            const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        email:gemail,
-                                        phone:gphone,
-                                        name:gname,
-                                        uid:guid
-                                    })
-                                });
+    //adding the user tto sql using the fecth---> come here after complete the wishlist,cart and filter come here.
+    // async function createNewUserInMySQL(gemail, gphone, gname , guid){
+    //     try{
+    //         const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
+    //                                 method: 'POST',
+    //                                 headers: {
+    //                                     'Content-Type': 'application/json',
+    //                                 },
+    //                                 body: JSON.stringify({
+    //                                     email:gemail,
+    //                                     phone:gphone,
+    //                                     name:gname,
+    //                                     uid:guid
+    //                                 })
+    //                             });
 
-                const data = await response.json();
-                console.log(data);
-        }catch(e){
-            console.log('getting error while login with google in create new user in sql',e);
-        }
-    }
+    //             const data = await response.json();
+    //             console.log(data);
+    //     }catch(e){
+    //         console.log('getting error while login with google in create new user in sql',e);
+    //     }
+    // }
 
-    //fetch the uid is present or not
-    async function checkUserExistsInMySQL(cuid){
-        try{
-            const response = await fetch('https://kripadesigners.com/backend/checkuid.php',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
-                },
-                body:JSON.stringify({
-                    uid:cuid,
-                })
-            });
-            const res = await response.json();
-            console.log("here is your check uid responsed ",res);
-            return (res.message ==="false" || res.message===false)?false:true;
-        }catch(e){
-            console.log("you got an error while checking  user exists in mysql",e);
-            return true; //while we got error, then we have to send true because , it won't add data to sql database
-        }
+    //fetch the uid is present or not ---> upto now stop here after complete the wishlist, cart and filter. -->come here to fetch from the backend
+    // async function checkUserExistsInMySQL(cuid){
+    //     try{
+    //         const response = await fetch('https://kripadesigners.com/backend/checkuid.php',{
+    //             method:'POST',
+    //             headers:{
+    //                 'Content-Type':'application/json',
+    //             },
+    //             body:JSON.stringify({
+    //                 uid:cuid,
+    //             })
+    //         });
+    //         const res = await response.json();
+    //         console.log("here is your check uid responsed ",res);
+    //         return (res.message ==="false" || res.message===false)?false:true;
+    //     }catch(e){
+    //         console.log("you got an error while checking  user exists in mysql",e);
+    //         return true; //while we got error, then we have to send true because , it won't add data to sql database
+    //     }
 
-    }
+    // }
 
     //sign with google
     async function signinwithgoogle(){
@@ -101,12 +101,12 @@ function Login(){
                         cart:[]
                     });
                 }
-                //adding data to the mysql
-                const userExistsInMySQL = await checkUserExistsInMySQL(user.uid);
-                if(!userExistsInMySQL){
-                    await createNewUserInMySQL(user.email,user.phoneNumber,user.displayName,user.uid);
-                }
-                console.log(result);
+                //adding data to the mysql-->first completed the wishlist ,cart and filter come here
+                // const userExistsInMySQL = await checkUserExistsInMySQL(user.uid);
+                // if(!userExistsInMySQL){
+                //     await createNewUserInMySQL(user.email,user.phoneNumber,user.displayName,user.uid);
+                // }
+                // console.log(result);
                 navigate('/');
                 loginsuccess();
             }catch(e){
@@ -138,22 +138,22 @@ function Login(){
                             wishlist:[],
                             cart:[]
                         });
-                        //adding the users data to the backend
-                        const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({
-                                            email: userreg.email,
-                                            phone: userreg.phone,
-                                            name: userreg.name,
-                                            uid:userCredential.user.uid
-                                        })
-                                    });
+                        //adding the users data to the backend--->for now stop this , after compeleting the wishlist ,cart and filter options come here
+                    //     const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
+                    //                     method: 'POST',
+                    //                     headers: {
+                    //                         'Content-Type': 'application/json',
+                    //                     },
+                    //                     body: JSON.stringify({
+                    //                         email: userreg.email,
+                    //                         phone: userreg.phone,
+                    //                         name: userreg.name,
+                    //                         uid:userCredential.user.uid
+                    //                     })
+                    //                 });
 
-                    const data = await response.json();
-                    console.log(data);
+                    // const data = await response.json();
+                    // console.log(data);
                 }
 
                 //email verification process
