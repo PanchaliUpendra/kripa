@@ -40,7 +40,7 @@ function Login(){
     const useralreadyext = () => toast.warn('user email already registered');
     const invalidmail = () => toast.warn('Invalid Mail')
 
-    //adding the user tto sql using the fecth---> come here after complete the wishlist,cart and filter come here.
+    //<--------------adding the user tto sql using the fecth---> come here after complete the wishlist,cart and filter come here.---------->
     // async function createNewUserInMySQL(gemail, gphone, gname , guid){
     //     try{
     //         const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
@@ -63,7 +63,7 @@ function Login(){
     //     }
     // }
 
-    //fetch the uid is present or not ---> upto now stop here after complete the wishlist, cart and filter. -->come here to fetch from the backend
+    //<-----fetch the uid is present or not ---> upto now stop here after complete the wishlist, cart and filter. -->come here to fetch from the backend---------->
     // async function checkUserExistsInMySQL(cuid){
     //     try{
     //         const response = await fetch('https://kripadesigners.com/backend/checkuid.php',{
@@ -101,7 +101,7 @@ function Login(){
                         cart:[]
                     });
                 }
-                //adding data to the mysql-->first completed the wishlist ,cart and filter come here
+                //<--------------adding data to the mysql---------->first completed the wishlist ,cart and filter come here
                 // const userExistsInMySQL = await checkUserExistsInMySQL(user.uid);
                 // if(!userExistsInMySQL){
                 //     await createNewUserInMySQL(user.email,user.phoneNumber,user.displayName,user.uid);
@@ -138,7 +138,7 @@ function Login(){
                             wishlist:[],
                             cart:[]
                         });
-                        //adding the users data to the backend--->for now stop this , after compeleting the wishlist ,cart and filter options come here
+                        //<---------------adding the users data to the backend--->for now stop this , after compeleting the wishlist ,cart and filter options come here
                     //     const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
                     //                     method: 'POST',
                     //                     headers: {

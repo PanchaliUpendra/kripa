@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import MyContext from './MyContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Firebase/Firebase';
+import { db } from './Firebase/Firebase';
+import { doc, onSnapshot } from "firebase/firestore";
 
 function MyProvider({children}){
 
@@ -11,10 +13,17 @@ function MyProvider({children}){
         emailverified:false
     })
 
+    const [usrdata,setusrdata] = useState({
+        wishlist:[],
+        cart:[]
+    })
+
     const sharedvalue={
         isauthed :user.isauthed,
         uid:user.uid,
-        emailverified:user.emailverified
+        emailverified:user.emailverified,
+        cart:usrdata.cart,
+        wishlist:usrdata.wishlist
     }
 
     useEffect(()=>{
@@ -32,6 +41,26 @@ function MyProvider({children}){
                     emailverified:user.emailVerified
                 }
               ))
+              const usrdocref = doc(db, 'users', user.uid);
+                const userfetchdata = async() =>{
+                try{
+                    await onSnapshot(usrdocref, (doc) => {
+                    
+                    const usrdata=doc.data();
+                    setusrdata(prev=>({
+                        ...prev,
+                        wishlist:usrdata.wishlist,
+                        cart:usrdata.cart
+                    }))
+                    console.log('usrdata: ',usrdata);
+
+                });
+                }catch(e){
+                    console.error('you got error while fetching the user data',e);
+                }
+                }
+        
+                userfetchdata();
               // ...
             } else {
               // User is signed out

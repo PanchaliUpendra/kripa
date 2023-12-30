@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Eachitem.css';
 import { ProductsData } from '../../ProductsData/ProductsData';
 import { useParams } from 'react-router-dom';
@@ -10,6 +10,11 @@ import Footer from '../../Components/Footer/Footer';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
+//firestore itmes importing
+import { writeBatch,doc} from "firebase/firestore";
+import { db } from '../../Firebase/Firebase';
+import MyContext from '../../MyContext';
+
 
 function Eachitem(){
     const navigate = useNavigate();
@@ -18,9 +23,30 @@ function Eachitem(){
     const {id} = useParams();
     const [cate,setcate]=useState([]);
 
-    //wishlist handling
-    const [addwishlist,setaddwishlist] = useState(false);
+    //sharedvalue ffrom useCOntext
+    const sharedvalue = useContext(MyContext);
 
+    //declaring the batch
+    const batch = writeBatch(db);
+
+    //these are the coding lines for wishlist
+    async function handlewritewishlist(id){
+        try{
+
+            if(sharedvalue.wishlist.includes(id)){
+                const batchrf = doc(db, "users", sharedvalue.uid);
+                batch.update(batchrf,{"wishlist":sharedvalue.wishlist.filter(item=>item!==id)});
+                await batch.commit();
+
+            }else{
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"wishlist":[...sharedvalue.wishlist,id]});
+                await batch.commit();
+            }
+        }catch(e){
+            console.error('you got an error while updating the wishlist',e);
+        }
+    }
 
     function numberwithcommas(x){
         let z=x;
@@ -73,8 +99,8 @@ function Eachitem(){
                         <div className='eachitem-eachview'>
                             <div>
                                 <img src={product.imgurl} alt="pic-loading"/>
-                                <div className='shop-all-products-wishlist'>
-                                    {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                                <div className='shop-all-products-wishlist' onClick={()=>handlewritewishlist(product.id)}>
+                                {sharedvalue.wishlist.includes(product.id)?<FavoriteIcon sx={{color:'red'}} />:<FavoriteBorderIcon sx={{color:'red'}} />}
                                 </div>
                             </div>
                             <div className='eachitem-detail'>
@@ -132,8 +158,8 @@ function Eachitem(){
                                 <p>Rs.{Number(item.dis)>0 && Number(item.dis)<=99?<span className='with-dis'>{numberwithcommas(funcaldis(item.dis,item.price))}<span className='dismiss-price'>{item.price}</span> <span className='percent-off-red'>({item.dis}% OFF)</span></span>:<span className='not-dis'>{numberwithcommas(item.price)}/-</span>}</p>
                             </div>
                         </div>
-                        <div className='shop-all-products-wishlist'>
-                                {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                        <div className='shop-all-products-wishlist' onClick={()=>handlewritewishlist(item.id)}>
+                                {sharedvalue.wishlist.includes(item.id)?<FavoriteIcon sx={{color:'red'}} />:<FavoriteBorderIcon sx={{color:'red'}} />}
                         </div>
                     </div>
                 ))

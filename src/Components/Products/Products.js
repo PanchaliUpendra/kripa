@@ -1,14 +1,44 @@
-import React, { useState } from 'react';
+import React, { useContext} from 'react';
 import './Products.css';
 import { products as Data } from '../Bestseller/Data';
 import { useNavigate } from 'react-router-dom';
 //material ui icons
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+
+//firebase importing
+import { writeBatch,doc} from "firebase/firestore";
+import { db } from '../../Firebase/Firebase';
+import MyContext from '../../MyContext';
+
+
 function Products(){
     const navigate = useNavigate();
-    //wishlist icons handle 
-    const [addwishlist,setaddwishlist] = useState(false);
+
+    //sharedvalue from usecontext
+    const sharedvalue = useContext(MyContext);
+
+    //firestore write batch declaring 
+    const batch = writeBatch(db);
+
+    //these are the coding lines for wishlist
+    async function handlewritewishlist(id){
+        try{
+
+            if(sharedvalue.wishlist.includes(id)){
+                const batchrf = doc(db, "users", sharedvalue.uid);
+                batch.update(batchrf,{"wishlist":sharedvalue.wishlist.filter(item=>item!==id)});
+                await batch.commit();
+
+            }else{
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"wishlist":[...sharedvalue.wishlist,id]});
+                await batch.commit();
+            }
+        }catch(e){
+            console.error('you got an error while updating the wishlist',e);
+        }
+    }
     function numberwithcommas(x){
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
     }
@@ -50,8 +80,8 @@ function Products(){
                                     <p>Rs. <span>{numberwithcommas(item.price)}/-</span></p>
                                 </div>
                                 </div>
-                                <div className='shop-all-products-wishlist'>
-                                    {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                                <div className='shop-all-products-wishlist' onClick={()=>handlewritewishlist(item.id)}>
+                                    {sharedvalue.wishlist.includes(item.id)?<FavoriteIcon sx={{color:'red'}} />:<FavoriteBorderIcon sx={{color:'red'}} />}
                                 </div>
                             </div>
                             

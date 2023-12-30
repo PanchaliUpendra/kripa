@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Shop.css';
 //material ui icons
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -23,12 +23,18 @@ import { ProductsData } from '../../ProductsData/ProductsData';
 import Footer from '../Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 
+//firebase importing
+import { writeBatch,doc} from "firebase/firestore";
+import {db} from '../../Firebase/Firebase';
+import MyContext from '../../MyContext';
+
 
 function Shop(){
     const navigate = useNavigate();
 
-    //wishlist icons handle 
-    const [addwishlist,setaddwishlist] = useState(false);
+    //sharedvalue fron useContext
+    const sharedvalue =useContext(MyContext);
+
 
     //handling the filter
     const [filteravail,setfilteravail] = useState({
@@ -40,7 +46,26 @@ function Shop(){
     
     const [filterdropdown,setfilterdropdown] = useState(false); //handling filter dropdown out of box
 
+    const batch = writeBatch(db);
 
+    //these are the coding lines for wishlist
+    async function handlewritewishlist(id){
+        try{
+
+            if(sharedvalue.wishlist.includes(id)){
+                const batchrf = doc(db, "users", sharedvalue.uid);
+                batch.update(batchrf,{"wishlist":sharedvalue.wishlist.filter(item=>item!==id)});
+                await batch.commit();
+
+            }else{
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"wishlist":[...sharedvalue.wishlist,id]});
+                await batch.commit();
+            }
+        }catch(e){
+            console.error('you got an error while updating the wishlist',e);
+        }
+    }
     
 
     function handleinstock(){
@@ -221,8 +246,8 @@ function Shop(){
                             </div>
                            
                         </div>
-                        <div className='shop-all-products-wishlist'>
-                                {addwishlist?<FavoriteIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>:<FavoriteBorderIcon sx={{color:'red'}} onClick={()=>setaddwishlist(prev=>!prev)}/>}
+                        <div className='shop-all-products-wishlist' onClick={()=>handlewritewishlist(item.id)}>
+                                {sharedvalue.wishlist.includes(item.id)?<FavoriteIcon sx={{color:'red'}} />:<FavoriteBorderIcon sx={{color:'red'}} />}
                         </div>
                         </div>
                         
