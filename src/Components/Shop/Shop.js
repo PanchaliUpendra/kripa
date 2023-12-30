@@ -30,6 +30,58 @@ function Shop(){
     //wishlist icons handle 
     const [addwishlist,setaddwishlist] = useState(false);
 
+    //handling the filter
+    const [filteravail,setfilteravail] = useState({
+        instock:false,
+        outofstock:false
+    })
+    const [filtertruec,setfiltertruec] = useState(0);
+
+    
+    const [filterdropdown,setfilterdropdown] = useState(false); //handling filter dropdown out of box
+
+
+    
+
+    function handleinstock(){
+        setfilteravail(prev=>({
+            ...prev,
+            instock:!filteravail.instock
+        }))
+        
+    }
+
+    function handleoutofstock(){
+        setfilteravail(prev=>({
+            ...prev,
+            outofstock:!filteravail.outofstock
+        }))
+       
+    }
+
+    function handlefilterreset(){
+        setfilteravail(prev=>({
+            ...prev,
+            instock:false,
+            outofstock:false
+        }))
+        
+    }
+    useEffect(()=>{
+        function handletruecount(){
+            var count=0;
+            if(filteravail.instock===true){
+                count+=1;
+            }
+            if(filteravail.outofstock===true){
+                count+=1;
+            }
+            setfiltertruec(count);
+        }
+        handletruecount();
+    },[filteravail]);
+//filter process stops here
+
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
         stiffness: 100,
@@ -117,9 +169,27 @@ function Shop(){
                 <div className='shop-filter-price'>
                     <div className='shop-filter'>
                         <p>filter :</p>
-                        <div className='shop-filter-avail'>
-                            <p>availability</p>
-                            <KeyboardArrowDownIcon fontSize="small"/>
+                        <div>
+                            <div className='shop-filter-avail' onClick={()=>setfilterdropdown(prev=>!prev)}>
+                                <p>availability</p>
+                                <KeyboardArrowDownIcon fontSize="small"/>
+                            </div>
+                            <div  className={filterdropdown?'shop-filter-downbox':'shop-filter-downbox-inactive'}>
+                                <div className='shop-filter-downbox-st-div'>
+                                    <p>{filtertruec} selected</p>
+                                    <p onClick={handlefilterreset}>Reset</p>
+                                </div>
+                                <div className='shop-filter-downbox-nd-div'>
+                                    <div>
+                                        <input type='checkbox' checked={filteravail.instock} onChange={()=>handleinstock()}/>
+                                        <label>In Stock</label>
+                                    </div>
+                                    <div>
+                                        <input type='checkbox' checked={filteravail.outofstock} onChange={()=>handleoutofstock()}/>
+                                        <label>Out Of Stock</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className='shop-price'>

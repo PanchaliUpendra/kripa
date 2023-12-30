@@ -3,7 +3,7 @@ import './Login.css';
 import Footer from '../Footer/Footer';
 import {  createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../Firebase/Firebase';
+import { auth, db } from '../../Firebase/Firebase';
 import { useNavigate } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import googleicon from '../../assests/googleicon.png';
 import {signInWithPopup, GoogleAuthProvider ,sendEmailVerification} from "firebase/auth";
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 
 function Login(){
@@ -87,23 +88,20 @@ function Login(){
     //sign with google
     async function signinwithgoogle(){
         try{
-           
-            // signInWithPopup(auth, provider)
-            // .then((result) => {
-            //     console.log(result);
-
-            //     navigate('/');
-            //     loginsuccess();
-               
-               
-            // }).catch((error) => {
-               
-            //     console.error(error);
-            //     loginerror()
-            // });
             try{
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
+                //adding data to the firestore
+                const docsnapshot = await getDoc(doc(db,'users',user.uid));
+                if(docsnapshot.exists()){
+                    console.log('happy shopping');
+                }else{
+                    await setDoc(doc(db,'users',user.uid),{
+                        wishlist:[],
+                        cart:[]
+                    });
+                }
+                //adding data to the mysql
                 const userExistsInMySQL = await checkUserExistsInMySQL(user.uid);
                 if(!userExistsInMySQL){
                     await createNewUserInMySQL(user.email,user.phoneNumber,user.displayName,user.uid);
@@ -136,6 +134,10 @@ function Login(){
                     const userCredential = await createUserWithEmailAndPassword(auth, userreg.email, userreg.password);
                     console.log(userCredential);
                     if(userCredential){
+                        await setDoc(doc(db,'users',userCredential.user.uid),{
+                            wishlist:[],
+                            cart:[]
+                        });
                         //adding the users data to the backend
                         const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
                                         method: 'POST',

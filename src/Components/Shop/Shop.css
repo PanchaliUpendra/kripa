@@ -68,6 +68,9 @@
     gap: 5px;
     align-items: center;
 }
+.shop-filter>div{
+    position: relative;
+}
 .shop-filter-avail{
     display: flex;
     flex-direction: row;
@@ -76,6 +79,7 @@
 }
 .shop-filter-avail:hover p{
     text-decoration: underline;
+    cursor: pointer;
 }
 .shop-price{
     display: flex;
@@ -85,6 +89,7 @@
 }
 .shop-price:hover p{
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .shop-sort-products{
@@ -100,6 +105,60 @@
     gap: 3px;
     align-items: center;
 }
+.shop-filter-downbox{
+    border: 1px solid rgb(204, 204, 204);
+    width: 310px;
+    min-height: 100px;
+    z-index: 9;
+    background-color: white;
+    border-radius: 3px;
+    position: absolute;
+    top: 35px;
+    padding-bottom: 10px;
+    transition: all 0.2s linear;
+}
+.shop-filter-downbox-inactive{
+    border: 1px solid rgb(204, 204, 204);
+    width: 310px;
+    min-height: 100px;
+    z-index: 9;
+    background-color: white;
+    border-radius: 3px;
+    position: absolute;
+    top: 25px;
+    padding-bottom: 10px;
+    visibility: hidden;
+}
+.shop-filter-downbox-st-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    font-size: 0.8rem;
+    font-family: 'quicksand';
+    font-weight: 500;
+    text-transform: capitalize;
+    border: none;
+    border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+.shop-filter-downbox-nd-div{
+    display: flex;
+    flex-direction: column;
+}
+.shop-filter-downbox-nd-div>div{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    font-family: 'quicksand';
+    font-weight: 500;
+}
+.shop-filter-downbox-nd-div>div input{
+    transform: scale(0.9);
+}
+
 
 /* shop products starts here */
 .path{
