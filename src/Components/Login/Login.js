@@ -43,7 +43,7 @@ function Login(){
     //adding the user tto sql using the fecth
     async function createNewUserInMySQL(gemail, gphone, gname , guid){
         try{
-            const response = await fetch('https://kripadesigners.com/userdata.php', {
+            const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ function Login(){
     //fetch the uid is present or not
     async function checkUserExistsInMySQL(cuid){
         try{
-            const response = await fetch('https://kripadesigners.com/checkuid.php',{
+            const response = await fetch('https://kripadesigners.com/backend/checkuid.php',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
@@ -139,7 +139,7 @@ function Login(){
                             cart:[]
                         });
                         //adding the users data to the backend
-                        const response = await fetch('https://kripadesigners.com/userdata.php', {
+                        const response = await fetch('https://kripadesigners.com/backend/userdata.php', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
