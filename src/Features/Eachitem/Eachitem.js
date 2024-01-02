@@ -57,7 +57,6 @@ function Eachitem(){
     async function handleaddtocart(){
         try{
             if(cart.size!==''){
-                console.log('add to cart: ',cart,'qty:',quantity);
                 const sfDocRef = doc(db, "users", sharedvalue.uid);
                 batch.update(sfDocRef,{"cart":[{
                     ...sharedvalue.cart[0],

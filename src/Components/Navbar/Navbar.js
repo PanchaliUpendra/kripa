@@ -25,6 +25,8 @@ import "react-toastify/dist/ReactToastify.css";
 function Navbar(){
     const navigate = useNavigate();
 
+    const [keyslen,setkeyslen] = useState(0);
+
     //notify for signout
     const signoutnotify = () => toast.success('sucessfully signed out!!');
     //function for signout
@@ -48,6 +50,8 @@ function Navbar(){
    
 
     const sharedvalue = useContext(MyContext);
+   
+   
 
     useEffect(() => {
         
@@ -100,6 +104,16 @@ function Navbar(){
         </ul>
         )
     //navbar modification ends here
+
+    //calculating the length of the keys !!!
+    useEffect(() => {
+        if (sharedvalue && sharedvalue.cart && sharedvalue.cart[0]) {
+          const tempkeyslen = Object.keys(sharedvalue.cart[0]).length;
+          setkeyslen(tempkeyslen);
+        }
+      }, [sharedvalue]);
+
+
     return(
         <>
            {menutoggle.left===false? <div className="nav-discount-div">
@@ -128,7 +142,7 @@ function Navbar(){
                     <Badge badgeContent={sharedvalue.wishlist.length} color="error">
                         <FavoriteBorderIcon onClick={()=>navigate('/wishlist')}/>
                     </Badge>
-                    <Badge badgeContent={sharedvalue.cart.length} color="error">
+                    <Badge badgeContent={keyslen} color="error">
                         <LocalMallIcon onClick={()=>navigate('/cart')}/>
                     </Badge>
                     </div>: <div>
