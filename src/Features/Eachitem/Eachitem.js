@@ -22,6 +22,10 @@ function Eachitem(){
     const [quantity,setquantity] = useState(1);
     const {id} = useParams();
     const [cate,setcate]=useState([]);
+    const [cart,setcart]=useState({
+        uid:'',
+        size:'',
+    });
 
     //sharedvalue ffrom useCOntext
     const sharedvalue = useContext(MyContext);
@@ -48,6 +52,30 @@ function Eachitem(){
         }
     }
 
+    //code for add to cart
+
+    async function handleaddtocart(){
+        try{
+            if(cart.size!==''){
+                console.log('add to cart: ',cart,'qty:',quantity);
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"cart":[{
+                    ...sharedvalue.cart[0],
+                    [id]:{
+                        size:cart.size,
+                        qty:quantity,
+                        uid:id
+                    }
+                }]});
+                await batch.commit();
+            }else{
+                alert('please select the size!!!!');
+            }
+        }catch(e){
+            console.log('you got an error while adding to cart');
+        }
+    }
+    //add to cart end
     function numberwithcommas(x){
         let z=x;
         z=Math.floor(z);
@@ -88,6 +116,10 @@ function Eachitem(){
 
     useEffect(()=>{
         window.scrollTo({top:0,behavior:'smooth'});
+        setcart(prev=>({
+            ...prev,
+            uid:id
+        }))
     },[id]);
 
     return(
@@ -111,13 +143,50 @@ function Eachitem(){
                                 <div className='eachitem-size'>
                                     <p>size</p>
                                     <ul>
-                                        {(Number(product.xsc)!==0 && Number(product.xsc)>0)?<li className={size==='xs'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>setsize('xs')}>xs</li>:<li className='eachitem-size-disable'>xs</li>}
-                                        {(Number(product.sc)!==0 && Number(product.sc)>0)?<li className={size==='s'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>setsize('s')}>s</li>:<li className='eachitem-size-disable'>s</li>} 
-                                        {(Number(product.mc)!==0 && Number(product.mc)>0)?<li className={size==='m'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>setsize('m')}>m</li>:<li className='eachitem-size-disable'>m</li>} 
-                                        {(Number(product.lc)!==0 && Number(product.lc)>0)?<li className={size==='l'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>setsize('l')}>l</li>:<li className='eachitem-size-disable'>l</li>} 
-                                        {(Number(product.xlc)!==0 && Number(product.xlc)>0)?<li className={size==='xl'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>setsize('xl')}>xl</li >:<li className='eachitem-size-disable'>xl</li>} 
-                                        {(Number(product.xxlc)!==0 && Number(product.xxlc)>0)? <li className={size==='xxl'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>setsize('xxl')}>xxl</li>: <li className='eachitem-size-disable'>xxl</li>} 
-                                        {(Number(product.xxxlc)!==0 && Number(product.xxxlc)>0)? <li className={size==='xxxl'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>setsize('xxxl')}>xxxl</li>: <li className='eachitem-size-disable'>xxxl</li>} 
+                                        {(Number(product.xsc)!==0 && Number(product.xsc)>0)?<li className={size==='xs'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>{
+                                            setsize('xs');
+                                            setcart(prev=>({
+                                                ...prev,
+                                                size:'xs'
+                                            }))
+                                            }}>xs</li>:<li className='eachitem-size-disable'>xs</li>}
+                                        {(Number(product.sc)!==0 && Number(product.sc)>0)?<li className={size==='s'?'eachitem-size-active':'eachitem-sixe-inactive'} 
+                                        onClick={()=>{
+                                            setsize('s');
+                                            setcart(prev=>({
+                                                ...prev,
+                                                size:'s'
+                                            }))}}>s</li>:<li className='eachitem-size-disable'>s</li>} 
+                                        {(Number(product.mc)!==0 && Number(product.mc)>0)?<li className={size==='m'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>{
+                                            setsize('m');
+                                            setcart(prev=>({
+                                                ...prev,
+                                                size:'m'
+                                            }))}}>m</li>:<li className='eachitem-size-disable'>m</li>} 
+                                        {(Number(product.lc)!==0 && Number(product.lc)>0)?<li className={size==='l'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>{
+                                            setsize('l');
+                                            setcart(prev=>({
+                                                ...prev,
+                                                size:'l'
+                                            }))}}>l</li>:<li className='eachitem-size-disable'>l</li>} 
+                                        {(Number(product.xlc)!==0 && Number(product.xlc)>0)?<li className={size==='xl'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>{
+                                            setsize('s');
+                                            setcart(prev=>({
+                                                ...prev,
+                                                size:'xl'
+                                            }))}}>xl</li >:<li className='eachitem-size-disable'>xl</li>} 
+                                        {(Number(product.xxlc)!==0 && Number(product.xxlc)>0)? <li className={size==='xxl'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>{
+                                            setsize('xxl');
+                                            setcart(prev=>({
+                                                ...prev,
+                                                size:'xxl'
+                                            }))}}>xxl</li>: <li className='eachitem-size-disable'>xxl</li>} 
+                                        {(Number(product.xxxlc)!==0 && Number(product.xxxlc)>0)? <li className={size==='xxxl'?'eachitem-size-active':'eachitem-sixe-inactive'} onClick={()=>{
+                                            setsize('xxxl');
+                                            setcart(prev=>({
+                                                ...prev,
+                                                size:'xxxl'
+                                            }))}}>xxxl</li>: <li className='eachitem-size-disable'>xxxl</li>} 
                                     </ul>
                                 </div>
                                 <div className='eachitem-quantity'>
@@ -130,7 +199,7 @@ function Eachitem(){
                                     
                                 </div>
                                 <div className='eachitem-buy-now'>
-                                    <button>add to cart</button>
+                                    <button onClick={()=>handleaddtocart()}>add to cart</button>
                                     <button>buy now</button>
                                 </div>
                             </div>

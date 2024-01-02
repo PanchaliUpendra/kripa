@@ -98,7 +98,7 @@ function Login(){
                 }else{
                     await setDoc(doc(db,'users',user.uid),{
                         wishlist:[],
-                        cart:[]
+                        cart:[{}]
                     });
                 }
                 //<--------------adding data to the mysql---------->first completed the wishlist ,cart and filter come here
@@ -136,7 +136,7 @@ function Login(){
                     if(userCredential){
                         await setDoc(doc(db,'users',userCredential.user.uid),{
                             wishlist:[],
-                            cart:[]
+                            cart:[{}]
                         });
                         //<---------------adding the users data to the backend--->for now stop this , after compeleting the wishlist ,cart and filter options come here
                     //     const response = await fetch('https://kripadesigners.com/backend/userdata.php', {

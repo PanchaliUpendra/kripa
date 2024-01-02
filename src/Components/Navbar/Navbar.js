@@ -3,6 +3,7 @@ import './Navbar.css';
 import navim1 from '../../assests/navim1.PNG';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import Badge from '@mui/material/Badge';
 /* navbar modification*/
 import Drawer from '@mui/material/Drawer';
 import { NavLink } from "react-router-dom";
@@ -124,8 +125,12 @@ function Navbar(){
                     </div> */}
 
                     {sharedvalue.isauthed ?<div className="wishlist-icons">
+                    <Badge badgeContent={sharedvalue.wishlist.length} color="error">
                         <FavoriteBorderIcon onClick={()=>navigate('/wishlist')}/>
+                    </Badge>
+                    <Badge badgeContent={sharedvalue.cart.length} color="error">
                         <LocalMallIcon onClick={()=>navigate('/cart')}/>
+                    </Badge>
                     </div>: <div>
                         <div className="nav-login">
                             <h1 onClick={()=>navigate('/login')} style={{cursor:'pointer'}}>Login</h1>

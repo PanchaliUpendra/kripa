@@ -52,8 +52,6 @@ function MyProvider({children}){
                         wishlist:usrdata.wishlist,
                         cart:usrdata.cart
                     }))
-                    console.log('usrdata: ',usrdata);
-
                 });
                 }catch(e){
                     console.error('you got error while fetching the user data',e);
