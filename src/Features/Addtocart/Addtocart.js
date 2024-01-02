@@ -7,13 +7,15 @@ import MyContext from '../../MyContext';
 import {ProductsData} from '../../ProductsData/ProductsData';
 
 import atcimg from '../../assests/addtocart.png';
+import { useNavigate } from 'react-router-dom';
 
 function Addtocart(){
 
     const [cartkeys,setcartkeys] = useState([]);
     const sharedvalue = useContext(MyContext); // importing the sharedvalue
-    
 
+    const navigate = useNavigate();
+    
     useEffect(() => {
         if (sharedvalue && sharedvalue.cart && sharedvalue.cart[0]) {
           const tempkeys = Object.keys(sharedvalue.cart[0]);
@@ -30,8 +32,10 @@ function Addtocart(){
             <div className='addtocart-first-img'>
                 <img src={atcimg} alt='addtocart'/>
             </div>
-            
-            <h1>Hello cart</h1>
+            <div className='eachcate-con-head'>
+                <h1>Cart</h1>
+                <p><span onClick={()=>navigate('/shop')}>Home / Shop /</span> Cart</p>
+            </div>
             {ProductsData.filter((item)=>cartkeys.includes(JSON.stringify(item.id))).map((product,idx)=>(
                 <div key={idx}>
                     <img src={product.imgurl} alt='product-pic'/>
