@@ -7,6 +7,10 @@
     justify-content: center;
 }
 
+.addtocart-second-con{
+    margin-bottom: 5%;
+}
+
 .addtocart-first-img{
     display: flex;
     flex-direction: row;
@@ -20,6 +24,127 @@
     width: 100%;
     height: 100%;
     object-fit: fill;
+}
+
+.addtocart-each-item{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border: none;
+    border-bottom: 2px solid #D1D5DB;
+    padding-bottom: 10px;
+    padding-top: 15px;
+    gap: 15px;
+    width: 100%;
+}
+
+.addtocart-ei-img{
+    width: 200px;
+    height: auto;
+}
+.addtocart-ei-img>img{
+    width: 100%;
+    height: auto;
+    object-fit: fill;
+}
+
+.addtocart-all-items{
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    margin: auto;
+    background-color: white;
+}
+.addtocart-eachitem-details{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+.addtocart-eachitem-details>h1{
+    font-size: 1.3rem;
+    font-family: 'quicksand';
+    font-weight: 500;
+}
+.addtocart-size-seclection{
+    border: 1px solid black;
+    padding: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-family: 'quicksand';
+    font-weight: 500;
+    height: fit-content;
+}
+.addtocart-size-seclection>select{
+    width: 45px;
+    border: none;
+    outline: none;
+    font-family: 'quicksand';
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.addtocart-size-seclection>select option{
+    font-size: 0.9rem;
+    width: fit-content;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.addtocart-size-qty{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.addtocart-remove-item{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.addtocart-remove-item>p{
+    font-family: 'quicksand';
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+@media screen and (max-width:1020px){
+    .addtocart-all-items{
+        width: 95%;
+    }
+}
+
+@media screen and (max-width:511px){
+    .addtocart-eachitem-details>h1{
+        font-size: 1rem;
+    }
+    .addtocart-remove-item{
+        justify-content: flex-start;
+    }
+    .addtocart-size-qty{
+        gap: 5px;
+        margin-top: 5px;
+    }
+    .addtocart-size-seclection{
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width:375px){
+    .addtocart-each-item{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width:316px){
