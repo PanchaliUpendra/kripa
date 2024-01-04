@@ -8,7 +8,7 @@
 }
 
 .addtocart-second-con{
-    margin-bottom: 5%;
+    margin-bottom:50px;
 }
 
 .addtocart-first-img{
@@ -81,7 +81,7 @@
     height: fit-content;
 }
 .addtocart-size-seclection>select{
-    width: 45px;
+    width: 60px;
     border: none;
     outline: none;
     font-family: 'quicksand';
@@ -118,8 +118,81 @@
     cursor: pointer;
 }
 
+.lets-checkout-div{
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.lets-checkout-div>p{
+    font-size: 1rem;
+    font-family: 'quicksand';
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.addtocart-two-buttons>button{
+    padding: 15px 20px;
+    background-color: rgb(233, 143, 7);
+    border: none;
+    color: white;
+    font-family: 'quicksand';
+    font-size: 1.1rem;
+    text-transform: capitalize;
+    border-radius: 5px;
+}
+
+
+.addtocart-two-buttons button:hover{
+    padding: 15px 20px;
+    background-color: rgb(253, 155, 8);
+    border: none;
+    color: white;
+    font-family: 'quicksand';
+    font-size: 1.1rem;
+    text-transform: capitalize;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.atc-savechanges-btn{
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.atc-savechanges-btn>button{
+    padding: 10px 20px;
+    background-color: rgba(0, 128, 0,0.2);
+    color: green;
+    font-size: 1rem;
+    font-family: 'quicksand';
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 @media screen and (max-width:1020px){
     .addtocart-all-items{
+        width: 95%;
+    }
+    .lets-checkout-div{
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+    }
+    .lets-checkout-div>p{
+        font-size: 0.9rem;
+    }
+    .atc-savechanges-btn{
         width: 95%;
     }
 }

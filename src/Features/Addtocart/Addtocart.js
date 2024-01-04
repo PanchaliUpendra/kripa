@@ -9,13 +9,60 @@ import {ProductsData} from '../../ProductsData/ProductsData';
 import atcimg from '../../assests/addtocart.png';
 import { useNavigate } from 'react-router-dom';
 
+import { writeBatch,doc} from "firebase/firestore";
+import { db } from '../../Firebase/Firebase';
+
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 function Addtocart(){
 
     const [cartkeys,setcartkeys] = useState([]);
-    const [quantity,setquantity] = useState(0);
     const sharedvalue = useContext(MyContext); // importing the sharedvalue
+
+    //firestore write batch declaring 
+    const batch = writeBatch(db);
+
+    const [cartitems,setcartitems] = useState([{}])
+
+    function handledeleteitem(item_id){ //function deleting the items in the cart
+        let tempcart = cartitems;
+        //deleting the key;
+        delete tempcart[item_id];
+        const tempkeys = Object.keys(tempcart);
+        setcartkeys(tempkeys);
+        setcartitems(tempcart);
+
+    }
+
+    function handlechangesize(item_id , item_size){ //function to handle the change size
+        if(item_size===""){
+            alert("you must choose any size here");
+        }else{
+            setcartitems(prev=>({
+                ...prev,
+                [item_id]:{
+                    ...cartitems[item_id],
+                    size:item_size
+                }
+            }))
+        }
+    }
+
+    async function handlesavechanges(){ //function to save the chnages
+        try{
+            if(JSON.stringify(sharedvalue.cart[0])===JSON.stringify(cartitems)){
+                alert("you didn't change anything!!!")
+            }else{
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"cart":[cartitems]});
+                await batch.commit();
+                alert('successfully changed!!');
+            }
+        }catch(e){
+            alert('you got an error while changing the cart!!');
+        }
+        
+    }
 
     //size selection value 
     // const [csize,setcsize] = useState("");
@@ -23,14 +70,26 @@ function Addtocart(){
     const navigate = useNavigate();
 
     // function subtraction
-    function decquan(){
-        if(quantity>1){
-            setquantity(prev=> prev-1);
+    function decquan(item_id,item_qty){
+        if(Number(item_qty)>1){
+            setcartitems(prev=>({
+                ...prev,
+                [item_id]:{
+                    ...cartitems[item_id],
+                    qty:Number(item_qty)-1
+                }
+            }))
         }
     }
     //function addition
-    function incquan(){
-        setquantity(prev=> prev+1);
+    function incquan(item_id,item_qty){
+        setcartitems(prev=>({
+            ...prev,
+            [item_id]:{
+                ...cartitems[item_id],
+                qty:Number(item_qty)+1
+            }
+        }))
     }
 
     //function number with commas
@@ -55,8 +114,10 @@ function Addtocart(){
         if (sharedvalue && sharedvalue.cart && sharedvalue.cart[0]) {
           const tempkeys = Object.keys(sharedvalue.cart[0]);
           setcartkeys(tempkeys);
+          setcartitems(sharedvalue.cart[0]);
         }
       }, [sharedvalue]);
+
     return(
         <>{cartkeys.length===0?
             <div className='addtocart-con'>
@@ -83,7 +144,7 @@ function Addtocart(){
                         <div className='addtocart-size-qty'>
                             <div className='addtocart-size-seclection'>
                                 <label>Size</label>
-                                <select value={sharedvalue.cart[0][product.id].size} >
+                                <select value={cartitems[product.id].size} onChange={(e)=>handlechangesize(product.id,e.target.value)} >
                                     <option value="">Select</option>
                                     <option value="xs">XS</option>
                                     <option value="s">S</option>
@@ -97,19 +158,28 @@ function Addtocart(){
                             <div className='eachitem-quantity'>
                                 <p>quantity</p>
                                     <div className='eachitem-quantity-paras'>
-                                        <p onClick={()=>decquan()}>-</p>
-                                        <p>{sharedvalue.cart[0][product.id].qty}</p>
-                                        <p onClick={()=>incquan()}>+</p>
+                                        <p onClick={()=>decquan(product.id,cartitems[product.id].qty)}>-</p>
+                                        <p>{cartitems[product.id].qty}</p>
+                                        <p onClick={()=>incquan(product.id,cartitems[product.id].qty)}>+</p>
                                     </div>      
                             </div>
                         </div>
                         <div className='addtocart-remove-item'>
                             <DeleteOutlineOutlinedIcon sx={{color:'red'}}/>
-                            <p>Remove Item</p>
+                            <p onClick={()=>handledeleteitem(product.id)}>Remove Item</p>
                         </div>
                     </div>
                 </div>
             ))}
+            </div>
+            <div className='atc-savechanges-btn'>
+                <button onClick={()=>handlesavechanges()}>Save Changes</button>
+            </div>
+            <div className='lets-checkout-div'>
+                <p>Let's proceed to checkout and finalize your order. Thank you for choosing us!</p>
+                <div className='addtocart-two-buttons'>
+                    <button>Proceed to Checkout</button>
+                </div>
             </div>
             
         </div>
