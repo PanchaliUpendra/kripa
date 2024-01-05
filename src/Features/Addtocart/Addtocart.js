@@ -25,13 +25,17 @@ function Addtocart(){
     const [cartitems,setcartitems] = useState([{}])
 
     function handledeleteitem(item_id){ //function deleting the items in the cart
-        let tempcart = cartitems;
-        //deleting the key;
+        // Create a copy of cartitems
+        const tempcart = { ...cartitems };
+        
+        // Deleting the key
         delete tempcart[item_id];
+        
+        // Update the state
         const tempkeys = Object.keys(tempcart);
         setcartkeys(tempkeys);
         setcartitems(tempcart);
-
+        
     }
 
     function handlechangesize(item_id , item_size){ //function to handle the change size
@@ -45,24 +49,11 @@ function Addtocart(){
                     size:item_size
                 }
             }))
+            
         }
     }
 
-    async function handlesavechanges(){ //function to save the chnages
-        try{
-            if(JSON.stringify(sharedvalue.cart[0])===JSON.stringify(cartitems)){
-                alert("you didn't change anything!!!")
-            }else{
-                const sfDocRef = doc(db, "users", sharedvalue.uid);
-                batch.update(sfDocRef,{"cart":[cartitems]});
-                await batch.commit();
-                alert('successfully changed!!');
-            }
-        }catch(e){
-            alert('you got an error while changing the cart!!');
-        }
-        
-    }
+    
 
     //size selection value 
     // const [csize,setcsize] = useState("");
@@ -79,6 +70,7 @@ function Addtocart(){
                     qty:Number(item_qty)-1
                 }
             }))
+            return true;
         }
     }
     //function addition
@@ -90,6 +82,7 @@ function Addtocart(){
                 qty:Number(item_qty)+1
             }
         }))
+        
     }
 
     //function number with commas
@@ -118,11 +111,27 @@ function Addtocart(){
         }
       }, [sharedvalue]);
 
+      async function handlesavechanges(){ //function to save the chnages
+        try{
+            if(JSON.stringify(sharedvalue.cart[0])===JSON.stringify(cartitems)){
+                alert("you didn't change anything!!!")
+            }else{
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"cart":[cartitems]});
+                await batch.commit();
+                alert("successfully saved!!!");
+            }
+        }catch(e){
+            alert('you got an error while changing the cart!!');
+        }  
+        }
+
     return(
         <>{cartkeys.length===0?
             <div className='addtocart-con'>
             <img src={Emptycart} alt='emptycart'/>
-        </div>
+            <button onClick={()=>handlesavechanges()} className='savechanges-addtoemptycart'>save changes</button>
+            </div>
         :
         <div className='addtocart-second-con'>
             <div className='addtocart-first-img'>
