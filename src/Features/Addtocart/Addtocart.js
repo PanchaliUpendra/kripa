@@ -24,7 +24,7 @@ function Addtocart(){
 
     const [cartitems,setcartitems] = useState([{}])
 
-    function handledeleteitem(item_id){ //function deleting the items in the cart
+    async function handledeleteitem(item_id){ //function deleting the items in the cart
         // Create a copy of cartitems
         const tempcart = { ...cartitems };
         
@@ -35,13 +35,23 @@ function Addtocart(){
         const tempkeys = Object.keys(tempcart);
         setcartkeys(tempkeys);
         setcartitems(tempcart);
+        if(JSON.stringify(tempcart)!==JSON.stringify(sharedvalue.cart[0])){
+            try{
+                    const sfDocRef = doc(db, "users", sharedvalue.uid);
+                    batch.update(sfDocRef,{"cart":[tempcart]});
+                    await batch.commit();
+            }catch(e){
+                alert('you got an error while changing the cart!!');
+            }  
+        }
         
     }
 
-    function handlechangesize(item_id , item_size){ //function to handle the change size
+    async function handlechangesize(item_id , item_size){ //function to handle the change size
         if(item_size===""){
             alert("you must choose any size here");
         }else{
+            let tempcs = {...cartitems};
             setcartitems(prev=>({
                 ...prev,
                 [item_id]:{
@@ -49,6 +59,20 @@ function Addtocart(){
                     size:item_size
                 }
             }))
+            try{
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"cart":[
+                    {...tempcs,
+                        [item_id]:{
+                        ...tempcs[item_id],
+                        size:item_size
+                    }
+                }
+            ]});
+                await batch.commit();
+            }catch(e){
+                alert('you got an error while changing the cart!!');
+            }  
             
         }
     }
@@ -61,8 +85,11 @@ function Addtocart(){
     const navigate = useNavigate();
 
     // function subtraction
-    function decquan(item_id,item_qty){
+    async function decquan(item_id,item_qty){
         if(Number(item_qty)>1){
+
+            var tempprev={...cartitems};
+
             setcartitems(prev=>({
                 ...prev,
                 [item_id]:{
@@ -70,11 +97,27 @@ function Addtocart(){
                     qty:Number(item_qty)-1
                 }
             }))
-            return true;
+
+            try{
+                const sfDocRef = doc(db, "users", sharedvalue.uid);
+                batch.update(sfDocRef,{"cart":[
+                    {...tempprev,
+                        [item_id]:{
+                        ...tempprev[item_id],
+                        qty:Number(item_qty)-1
+                    }
+                }
+            ]});
+                await batch.commit();
+            }catch(e){
+                alert('you got an error while changing the cart!!');
+            }  
+            
         }
     }
     //function addition
-    function incquan(item_id,item_qty){
+    async function incquan(item_id,item_qty){
+        var tempprev={...cartitems};
         setcartitems(prev=>({
             ...prev,
             [item_id]:{
@@ -82,6 +125,20 @@ function Addtocart(){
                 qty:Number(item_qty)+1
             }
         }))
+        try{
+            const sfDocRef = doc(db, "users", sharedvalue.uid);
+            batch.update(sfDocRef,{"cart":[
+                {...tempprev,
+                    [item_id]:{
+                    ...tempprev[item_id],
+                    qty:Number(item_qty)+1
+                }
+            }
+        ]});
+            await batch.commit();
+        }catch(e){
+            alert('you got an error while changing the cart!!');
+        }  
         
     }
 
@@ -111,26 +168,10 @@ function Addtocart(){
         }
       }, [sharedvalue]);
 
-      async function handlesavechanges(){ //function to save the chnages
-        try{
-            if(JSON.stringify(sharedvalue.cart[0])===JSON.stringify(cartitems)){
-                alert("you didn't change anything!!!")
-            }else{
-                const sfDocRef = doc(db, "users", sharedvalue.uid);
-                batch.update(sfDocRef,{"cart":[cartitems]});
-                await batch.commit();
-                alert("successfully saved!!!");
-            }
-        }catch(e){
-            alert('you got an error while changing the cart!!');
-        }  
-        }
-
     return(
         <>{cartkeys.length===0?
             <div className='addtocart-con'>
             <img src={Emptycart} alt='emptycart'/>
-            <button onClick={()=>handlesavechanges()} className='savechanges-addtoemptycart'>save changes</button>
             </div>
         :
         <div className='addtocart-second-con'>
@@ -180,9 +221,6 @@ function Addtocart(){
                     </div>
                 </div>
             ))}
-            </div>
-            <div className='atc-savechanges-btn'>
-                <button onClick={()=>handlesavechanges()}>Save Changes</button>
             </div>
             <div className='lets-checkout-div'>
                 <p>Let's proceed to checkout and finalize your order. Thank you for choosing us!</p>

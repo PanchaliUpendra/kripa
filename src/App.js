@@ -15,6 +15,7 @@ import About from './Components/About/About';
 import Addtocart from './Features/Addtocart/Addtocart';
 import Wishlist from './Features/Wishlist/Wishlist';
 import Storelocator from './Features/Storelocator/Storelocator';
+import Checkout from './Buying/Checkout/Checkout';
 
 
 
@@ -38,7 +39,13 @@ function App() {
         <Route path='/*' element={<Pagenotfound/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/storelocator' element={<Storelocator/>}/>
-        {sharedvalue.isauthed===true && sharedvalue.emailverified && <Route path='/cart' element={<Addtocart/>}/>}
+        {
+          sharedvalue.isauthed===true && sharedvalue.emailverified && 
+          <Route path='/cart' element={<Addtocart/>}>
+            <Route index element={<Checkout/>}/>
+            <Route path='tips' element={<Checkout/>}/>
+          </Route>
+          }
         {sharedvalue.isauthed===true && sharedvalue.emailverified && <Route path='/wishlist' element={<Wishlist/>}/>}   
       </Routes>
       </div>
