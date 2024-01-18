@@ -1,0 +1,61 @@
+.dnavbar-con{
+    width: 310px;
+    background-color:rgba(231, 231, 231,0.2);
+    box-shadow: 17px 2px 16px -24px rgba(0,0,0,0.75);
+    height: 100vh;
+    position: sticky;
+    top: 0;
+   
+}
+.dnav-header{
+    min-height: 50px;
+    background-color: rgb(235, 235, 235);
+    padding: 20px;
+}
+.dnav-header>p{
+    font-size: 1.3rem;
+    font-family: 'poppins';
+    color: black;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.dnav-ul{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+.dnav-ul li{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    
+    padding: 10px 20px;
+    border-radius: 6px;
+    gap: 10px;
+    color: rgb(148, 148, 148);
+}
+.dnav-ul .active{
+    border-radius: 9px;
+}
+.dnav-ul .active li{
+    color: black;
+}
+
+.dnav-ul li:hover{
+    background-color: rgba(30, 40, 50, 0.12);
+    color: black;
+    cursor: pointer;
+}
+.dnav-ul li p{
+    font-size: 1rem;
+    font-family: 'poppins';
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.analytics-ubbu{
+    display: flex;
+    flex-direction: row;
+}

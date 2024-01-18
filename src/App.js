@@ -47,7 +47,11 @@ function App() {
           {sharedvalue.isauthed===true && sharedvalue.emailverified && <Route path='/wishlist' element={<Wishlist/>}/>}   
 
           {/* below is a section only for admin and workers dashboard */}
-          <Route path='/dashboard' element={<Analytics/>}/>
+
+          {sharedvalue.isauthed===true && sharedvalue.isAdmin && sharedvalue.uid===sharedvalue.admin && <Route path='/dashboard' element={<Analytics/>}/>}
+
+
+          
         </Routes>
       </div>
     </BrowserRouter>

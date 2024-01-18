@@ -13,10 +13,10 @@ function MyProvider({children}){
         emailverified:false
     })
 
-    // const [worker,setworker] = useState({
-    //     admin:"",
-    //     employee:[]
-    // })
+    const [worker,setworker] = useState({
+        admin:"",
+        employee:[]
+    })
 
     const [usrdata,setusrdata] = useState({
         wishlist:[],
@@ -28,7 +28,10 @@ function MyProvider({children}){
         uid:user.uid,
         emailverified:user.emailverified,
         cart:usrdata.cart,
-        wishlist:usrdata.wishlist
+        wishlist:usrdata.wishlist,
+        isAdmin:user.uid===worker.admin,
+        admin:worker.admin,
+        employee:worker.employee
     }
 
     useEffect(()=>{
@@ -66,7 +69,23 @@ function MyProvider({children}){
                 //calling user fetch
                 userfetchdata();
             //reading the data of admin
-            // const workerdocref=doc(db,"employee",)
+            const workerdocref=doc(db,"employee",'AHp7ifFxD32JOJ8tiH3g');
+            const employeefetchdata = async()=>{
+                try{
+                    await onSnapshot(workerdocref,(doc)=>{
+                        const workerdata = doc.data();
+                        setworker(prev =>({
+                            ...prev,
+                            admin:workerdata.admin,
+                            employee:workerdata.employee
+                        }));
+                    })
+                }catch(e){
+                    console.error('you got error while fetching the workers data',e);
+                }
+            }
+            //calling workers fetch
+            employeefetchdata();
               
             } else {
               // User is signed out
@@ -78,6 +97,11 @@ function MyProvider({children}){
                         emailVerified:false
                     }
                 ))
+                setworker(prev=>({
+                    ...prev,
+                    admin:"",
+                    employee:[]
+                }))
             }
           });
           return () => {
