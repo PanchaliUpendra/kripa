@@ -13,6 +13,11 @@ function MyProvider({children}){
         emailverified:false
     })
 
+    // const [worker,setworker] = useState({
+    //     admin:"",
+    //     employee:[]
+    // })
+
     const [usrdata,setusrdata] = useState({
         wishlist:[],
         cart:[]
@@ -41,6 +46,7 @@ function MyProvider({children}){
                     emailverified:user.emailVerified
                 }
               ))
+              //reading the users data
               const usrdocref = doc(db, 'users', user.uid);
                 const userfetchdata = async() =>{
                 try{
@@ -57,9 +63,11 @@ function MyProvider({children}){
                     console.error('you got error while fetching the user data',e);
                 }
                 }
-        
+                //calling user fetch
                 userfetchdata();
-              // ...
+            //reading the data of admin
+            // const workerdocref=doc(db,"employee",)
+              
             } else {
               // User is signed out
                 setuser(prev=>(

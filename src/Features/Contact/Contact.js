@@ -9,6 +9,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
+import Navbar from '../../Components/Navbar/Navbar';
+
 import Footer from '../../Components/Footer/Footer';
 function Contact(){
     useEffect(()=>{
@@ -16,6 +18,7 @@ function Contact(){
     },[]);
     return(
         <>
+        <Navbar/>
             <div className='contact-con'>
                 <div className='contact-form'>
                     <div className='contact-form-header'>

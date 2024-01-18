@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './About.css';
 import Footer from '../Footer/Footer';
+import Navbar from '../Navbar/Navbar';
 
 function About(){
     useEffect(()=>{
@@ -8,6 +9,7 @@ function About(){
     },[]);
     return(
         <>
+        <Navbar/>
             <div className='about-con'>
                 <div className='about-intro'>
                     <div>

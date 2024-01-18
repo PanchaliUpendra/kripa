@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import googleicon from '../../assests/googleicon.png';
 import {signInWithPopup, GoogleAuthProvider ,sendEmailVerification} from "firebase/auth";
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import Navbar from '../Navbar/Navbar';
 
 
 function Login(){
@@ -234,6 +235,7 @@ function Login(){
     },[])
     return(
         <>
+        <Navbar/>
         <div className='login-con'>
             <div className={loginreg?"card":"card-hover"}>
                 <div className="card-inner">

@@ -4,6 +4,7 @@ import './Addtocart.css';
 import Emptycart from '../../assests/emptycart.gif'
 import Footer from '../../Components/Footer/Footer';
 import MyContext from '../../MyContext';
+import Navbar from '../../Components/Navbar/Navbar';
 import {ProductsData} from '../../ProductsData/ProductsData';
 
 import atcimg from '../../assests/addtocart.png';
@@ -169,7 +170,9 @@ function Addtocart(){
       }, [sharedvalue]);
 
     return(
-        <>{cartkeys.length===0?
+        <>
+        <Navbar/>
+        {cartkeys.length===0?
             <div className='addtocart-con'>
             <img src={Emptycart} alt='emptycart'/>
             </div>

@@ -6,6 +6,8 @@ import { Tilt } from 'react-tilt'
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../Components/Footer/Footer';
 
+import Navbar from '../../Components/Navbar/Navbar';
+
 //import material ui icons
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -123,6 +125,7 @@ function Eachitem(){
 
     return(
         <>
+        <Navbar/>
         <div className='eachitemview-one'>
             {
                 ProductsData.filter((item)=>Number(item.id)===Number(id)).map((product,idx)=>(

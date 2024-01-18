@@ -4,6 +4,7 @@ import Footer from "../Footer/Footer";
 import Insta from "../Insta/Insta";
 import Bestseller from "../Bestseller/Bestseller";
 import Products from "../Products/Products";
+import Navbar from "../Navbar/Navbar";
 import { Typewriter } from 'react-simple-typewriter'
 import AliceCarousel from 'react-alice-carousel';
 
@@ -68,6 +69,7 @@ function Homepage(){
     },[]);
     return(
         <>
+            <Navbar/>
             <div className="home-con">
                 <img src={homepim2} alt="style pics" className="home-style-img"/>
                 <img src={homepim2} alt="style pics" className="home-style-img123"/>

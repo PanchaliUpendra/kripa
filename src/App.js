@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import './App.css';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import Homepage from './Components/Homepage/Homepage';
-import Navbar from './Components/Navbar/Navbar';
 import Shop from './Components/Shop/Shop';
 import Login from './Components/Login/Login';
 import Eachcate from './Features/Eachcate/Eachcate';
@@ -16,6 +15,7 @@ import Addtocart from './Features/Addtocart/Addtocart';
 import Wishlist from './Features/Wishlist/Wishlist';
 import Storelocator from './Features/Storelocator/Storelocator';
 import Checkout from './Buying/Checkout/Checkout';
+import Analytics from './Dashboard/Analytics/Analytics';
 
 
 
@@ -26,28 +26,29 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-      <Navbar/>
-      
-      <Routes>
-        <Route path='/' element={<Homepage/>}/>
-        <Route path='/shop' element={<Shop/>}/>
-        {sharedvalue.isauthed===false && <Route path='/login' element={<Login/>}/>}
-        <Route path='/collection/:cate' element={<Eachcate/>}/>
-        <Route path='/shop/:id' element={<Eachitem/>}/>
-        <Route path='/contact' element={<Contact/>}/>
-        {sharedvalue.emailverified===false && sharedvalue.isauthed===true && <Route path='/verification' element={<Emailverification/>}/>}
-        <Route path='/*' element={<Pagenotfound/>}/>
-        <Route path='/about' element={<About/>}/>
-        <Route path='/storelocator' element={<Storelocator/>}/>
-        {
-          sharedvalue.isauthed===true && sharedvalue.emailverified && 
-          <Route path='/cart' element={<Addtocart/>}>
-            <Route index element={<Checkout/>}/>
-            <Route path='tips' element={<Checkout/>}/>
-          </Route>
-          }
-        {sharedvalue.isauthed===true && sharedvalue.emailverified && <Route path='/wishlist' element={<Wishlist/>}/>}   
-      </Routes>
+        <Routes>
+          <Route path='/' element={<Homepage/>}/>
+          <Route path='/shop' element={<Shop/>}/>
+          {sharedvalue.isauthed===false && <Route path='/login' element={<Login/>}/>}
+          <Route path='/collection/:cate' element={<Eachcate/>}/>
+          <Route path='/shop/:id' element={<Eachitem/>}/>
+          <Route path='/contact' element={<Contact/>}/>
+          {sharedvalue.emailverified===false && sharedvalue.isauthed===true && <Route path='/verification' element={<Emailverification/>}/>}
+          <Route path='/*' element={<Pagenotfound/>}/>
+          <Route path='/about' element={<About/>}/>
+          <Route path='/storelocator' element={<Storelocator/>}/>
+          {
+            sharedvalue.isauthed===true && sharedvalue.emailverified && 
+            <Route path='/cart' element={<Addtocart/>}>
+              <Route index element={<Checkout/>}/>
+              <Route path='tips' element={<Checkout/>}/>
+            </Route>
+            }
+          {sharedvalue.isauthed===true && sharedvalue.emailverified && <Route path='/wishlist' element={<Wishlist/>}/>}   
+
+          {/* below is a section only for admin and workers dashboard */}
+          <Route path='/dashboard' element={<Analytics/>}/>
+        </Routes>
       </div>
     </BrowserRouter>
   );

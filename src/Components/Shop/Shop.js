@@ -28,6 +28,8 @@ import { writeBatch,doc} from "firebase/firestore";
 import {db} from '../../Firebase/Firebase';
 import MyContext from '../../MyContext';
 
+import Navbar from '../Navbar/Navbar';
+
 
 function Shop(){
     const navigate = useNavigate();
@@ -172,6 +174,7 @@ function Shop(){
     },[]);
     return(
         <>
+        <Navbar/>
         <motion.div className="progress-bar" style={{ scaleX }} />
             <div className='shop-cur-first-div'>
                 <AliceCarousel

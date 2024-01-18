@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './Storelocator.css'
 import Footer from '../../Components/Footer/Footer';
+import Navbar from '../../Components/Navbar/Navbar';
 
 function Storelocator(){
     useEffect(()=>{
@@ -8,6 +9,7 @@ function Storelocator(){
     },[]);
     return(
         <>
+            <Navbar/>
             <div className='store-locator'>
                 <div className='store-locator-header'>
                     <h1>Store Locator</h1>

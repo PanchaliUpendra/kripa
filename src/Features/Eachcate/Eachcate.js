@@ -15,6 +15,8 @@ import { writeBatch,doc} from "firebase/firestore";
 import { db } from '../../Firebase/Firebase';
 import MyContext from '../../MyContext';
 
+import Navbar from '../../Components/Navbar/Navbar';
+
 function Eachcate(){
     const navigate = useNavigate();
     const { cate } = useParams();
@@ -77,6 +79,7 @@ function Eachcate(){
     },[cate]);
     return(
         <>
+        <Navbar/>
         <div className='eachcate-con'>
             <div className='each-category-banner'>
                 <img src={Eachcategory} alt='each-cate' className='each-category-banner-img'/>

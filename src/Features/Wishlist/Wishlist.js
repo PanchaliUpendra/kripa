@@ -4,6 +4,7 @@ import emptylist from '../../assests/emptylist.gif';
 import Footer from '../../Components/Footer/Footer';
 import MyContext from '../../MyContext';
 import {ProductsData} from '../../ProductsData/ProductsData';
+import Navbar from '../../Components/Navbar/Navbar';
 //material ui icons
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -41,6 +42,7 @@ function Wishlist(){
     const navigate = useNavigate();
     return(
         <>
+        <Navbar/>
         {
             sharedvalue.wishlist.length>0?
             <div>
